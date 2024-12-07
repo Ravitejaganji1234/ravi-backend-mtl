@@ -58,7 +58,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/employeeManager/employees/${id}").hasAuthority("admin")
                         .anyRequest().authenticated())
 //                .formLogin(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults())
+                .httpBasic(AbstractHttpConfigurer::disable)
 //                . oauth2Login(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -90,7 +90,7 @@ public class SecurityConfig {
 @Bean
 public UrlBasedCorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(Collections.singletonList("https://mtlfrontend.azurewebsites.net")); // Allow frontend domain
+    configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000")); // Allow frontend domain
     configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE")); // Allow HTTP methods
     configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type")); // Allow headers
     configuration.setAllowCredentials(true); // Allow cookies if necessary
